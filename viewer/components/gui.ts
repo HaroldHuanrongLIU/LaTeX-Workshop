@@ -199,6 +199,14 @@ export function registerKeyBind() {
         }
     })
 
+    // #4936 A strange bug prevents CTRL/CMD+A from working in input box
+    window.addEventListener('keydown', (evt: KeyboardEvent) => {
+        if ((evt.target as HTMLElement).nodeName === 'INPUT' &&
+            ((evt.ctrlKey || evt.metaKey) && evt.key === 'a')) {
+            (evt.target as HTMLInputElement).select()
+        }
+    })
+
     window.addEventListener('keydown', (evt: KeyboardEvent) => {
         if (evt.key === 'c' && (evt.ctrlKey || evt.metaKey)) {
             const selection = window.getSelection()

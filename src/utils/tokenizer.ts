@@ -41,11 +41,11 @@ function macroTokenizer(document: vscode.TextDocument, position: vscode.Position
  * @param position The position to be scanned at.
  */
 function argTokenizer(document: vscode.TextDocument, position: vscode.Position): vscode.Range | undefined {
-    const startResult = document.getText(new vscode.Range(new vscode.Position(position.line, 0), position)).match(/[{,[](?=[^{},[\]]*$)/)
+    const startResult = document.getText(new vscode.Range(new vscode.Position(position.line, 0), position)).match(/[{,[\s](?=[^{},[\]\s]*$)/)
     if (startResult === null || startResult.index === undefined || startResult.index < 0) {
         return
     }
-    const endResult = document.getText(new vscode.Range(position, new vscode.Position(position.line, 65535))).match(/[}\],]/)
+    const endResult = document.getText(new vscode.Range(position, new vscode.Position(position.line, 65535))).match(/[}\],\s$]|$/)
     if (endResult === null || endResult.index === undefined || endResult.index < 0) {
         return
     }
